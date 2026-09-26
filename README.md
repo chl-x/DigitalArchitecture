@@ -4,7 +4,7 @@
 
 ## 線上瀏覽
 
-**https://chinghanglee.github.io/DigitalArchitecture/**
+**https://chl-x.github.io/DigitalArchitecture/**
 
 純靜態網頁,也可以在本機直接用瀏覽器打開 `index.html`,不需要伺服器、不需要 build。
 
