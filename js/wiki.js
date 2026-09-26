@@ -8,6 +8,7 @@ window.WIKI = (function () {
   // 沒列在這裡的 entity,一律用 nameEn || name 當搜尋詞
   // 多為「名稱會撞名」或「無對應條目、改連母概念」的情況
   const OVERRIDES = {
+    tectonism:           "Parametricism",            // 英文維基無獨立條目
     cad:                 "Computer-aided design",
     maya:                "Autodesk Maya",            // 否則撞到馬雅文明
     nurbs:               "Non-uniform rational B-spline",

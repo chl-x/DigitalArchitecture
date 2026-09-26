@@ -15,6 +15,15 @@ window.DATA = {
 
   // type: person | tool | concept | project | lab
   entities: [
+    // ─── 補充:建構主義 ────────────────────────────────
+    { id: "tectonism", type: "concept", name: "建構主義(Tectonism)", nameEn: "Tectonism", year: 2017, periodId: "P5",
+      summary: "Schumacher 提出的參數化主義子風格:以計算式工程找形與最佳化,作為建築形式的來源。",
+      body: [ "建構主義(Tectonism)是 Patrik Schumacher 自 2017 年起正式命名並推廣的風格概念,他視之為參數化主義目前的發展階段 — 繼 foldism、blobism 之後的新分支。他的定義是:把以工程與製造為基礎的找形與最佳化過程,在風格上加以強化。其理論發展可追溯到 2010 年前後:全球經濟危機後的經濟性訴求、與傳統建構學的對話,以及結構與環境工程的生形、模擬、最佳化方法和機器人建造的普及,共同孕育了它。2023 年的專書《Tectonism: Architecture for the 21st Century》是對這十餘年發展的總整理。",
+              "它的核心轉變,是 Schumacher 所說的「從類型學到拓撲學」:以有限元素分析為代表的模擬技術,讓結構的基本單位從梁、柱、板等構件,變成連續分佈的粒子;配合可批量客製的數位建造,構件之間的界線隨之消解,形態呈現漸進最佳化與平滑過渡。這條路線有清楚的前史 — Frei Otto、Gaudí、Candela 的結構找形,早已證明工程規律本身就是豐富的形式資源。",
+              "但在 Schumacher 的理論中,工程最佳化從來不是目的,而是工具:建築的對象始終是人。建構表達承接了傳統裝飾的角色,為空間提供可讀的秩序,並透過「導向」與「定位」兩種基本模式影響人的行為 — 殼體的凹凸曲面分別形成放射與向心的秩序,被動式遮陽與通風的形式則天然帶有方向資訊(如 KAPSARC 阿卜杜拉國王石油研究中心)。結構與環境性能因此不再只是限制條件,而成為組織社會行為的空間資源。" ],
+      sources: [ { title: "Schumacher, P. (2017). Tectonism in Architecture, Design and Fashion: Innovations in Digital Fabrication as Stylistic Drivers. Architectural Design", url: "https://onlinelibrary.wiley.com/doi/abs/10.1002/ad.2245" },
+                 { title: "Schumacher, P. (2023). Tectonism: Architecture for the 21st Century. Images Publishing", url: "https://imagespublishing.com/us/book/tectonism/" },
+                 { title: "閆超(2023)。「建造」作為一種社會行為學工程:帕特里克·舒馬赫《建構主義》譯後記。時代建築(2)", url: "https://www.cnki.net" } ] },
     // ─── 補充:新物質主義與曼海姆(批次四) ─────────────
     { id: "newmaterialism", type: "concept", name: "新物質主義", nameEn: "New materialism", year: 2014, periodId: "P5",
       summary: "物質不是被形式塑造的被動材料,而是有自身行為與能動性的設計參與者。",
@@ -286,8 +295,11 @@ window.DATA = {
 
     { id: "schumacher", type: "person", name: "Patrik Schumacher", nameEn: "Patrik Schumacher", year: 2008, periodId: "P3",
       summary: "2008 年提出《Parametricism Manifesto》,將參數化定位為後現代之後的新風格。",
-      body: "在第 11 屆威尼斯建築雙年展發表的宣言主張 parametricism 應作為當代主導風格,引發長達十年的學界辯論。",
-      refs: ["〈Parametricism: A New Global Style for Architecture and Urban Design〉(2008)", "《The Autopoiesis of Architecture》(2011)"] },
+      body: [ "在第 11 屆威尼斯建築雙年展發表的宣言主張 parametricism 應作為當代主導風格,引發長達十年的學界辯論。",
+              "2016 年提出〈Parametricism 2.0〉,2017 年起則將計算式工程找形與最佳化所驅動的形式語言命名為建構主義(Tectonism),視之為參數化主義的最新階段,並於 2023 年出版同名專書。" ],
+      refs: ["〈Parametricism: A New Global Style for Architecture and Urban Design〉(2008)", "《The Autopoiesis of Architecture》(2011)", "《Tectonism: Architecture for the 21st Century》(2023)"],
+      sources: [ { title: "Patrik Schumacher — Wikipedia", url: "https://en.wikipedia.org/wiki/Patrik_Schumacher" },
+                 { title: "Schumacher, P. (2017). Tectonism in Architecture, Design and Fashion. Architectural Design", url: "https://onlinelibrary.wiley.com/doi/abs/10.1002/ad.2245" } ] },
 
     { id: "rutten", type: "person", name: "David Rutten", nameEn: "David Rutten", year: 2008, periodId: "P3",
       summary: "Grasshopper 的開發者,讓視覺化程式設計進入建築教育。",
@@ -311,8 +323,10 @@ window.DATA = {
 
     { id: "parametricism", type: "concept", name: "Parametricism", nameEn: "Parametricism", year: 2008, periodId: "P3",
       summary: "Schumacher 提出的風格主張,將參數化定位為後現代之後的時代風格。",
-      body: "強調 differentiation、correlation、scripting,從美學到都市尺度的全面風格化主張,既被擁護也飽受批評為形式主義。",
-      sources: [ { title: "Schumacher, P. (2009). Parametricism: A New Global Style for Architecture and Urban Design. Architectural Design 79(4)", url: "https://doi.org/10.1002/ad.912" } ] },
+      body: [ "強調 differentiation、correlation、scripting,從美學到都市尺度的全面風格化主張,既被擁護也飽受批評為形式主義。",
+              "這個主張本身也在演進:2008 年威尼斯雙年展的宣言之後,Schumacher 於 2016 年在 AD 提出〈Parametricism 2.0〉,主張參數化主義必須從形式探索走向對建成環境的全面影響;其內部也分化出多個子風格 — foldism、blobism,以及 2017 年起他正式命名的建構主義(Tectonism),以計算式工程找形與最佳化作為形式的來源。" ],
+      sources: [ { title: "Schumacher, P. (2009). Parametricism: A New Global Style for Architecture and Urban Design. Architectural Design 79(4)", url: "https://doi.org/10.1002/ad.912" },
+                 { title: "Schumacher, P. (2016). Introduction: Parametricism 2.0 — Gearing up to Impact the Global Built Environment. Architectural Design (AD Profile 240)", url: "https://patrikschumacher.com/introduction-parametricism-2-0/" } ] },
 
     { id: "heydar", type: "project", name: "Heydar Aliyev 文化中心", nameEn: "Heydar Aliyev Center", year: 2012, periodId: "P3",
       summary: "ZHA 在亞塞拜然完工的曲面地景,是參數化美學的代表作。",
@@ -1197,6 +1211,11 @@ window.DATA = {
   // 關聯 — from / to 都是 entity id
   // label: 創造 / 啟發 / 推動 / 使用 / 主持 / 學於 / 任教於 / 影響 / 演化自
   relations: [
+    // 建構主義
+    { from: "schumacher",           to: "tectonism", label: "提出" },
+    { from: "parametricism",        to: "tectonism", label: "衍生" },
+    { from: "formfinding",          to: "tectonism", label: "形式資源" },
+    { from: "topologyoptimization", to: "tectonism", label: "驅動" },
     // 新物質主義與曼海姆(批次四)
     { from: "newmaterialism", to: "digitalmateriality",  label: "理論根源" },
     { from: "newmaterialism", to: "materialComputation", label: "理論根源" },
