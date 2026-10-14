@@ -125,13 +125,21 @@
     else observeTargets.push(document.getElementById(c.id));
   });
 
+  const tocBox = toc.closest(".ch-toc");
+  const keepVisible = a => {
+    if (tocBox.scrollHeight <= tocBox.clientHeight) return;
+    const box = tocBox.getBoundingClientRect(), r = a.getBoundingClientRect();
+    if (r.top < box.top + 40 || r.bottom > box.bottom - 40)
+      tocBox.scrollTo({ top: tocBox.scrollTop + (r.top - box.top) - tocBox.clientHeight / 3, behavior: "smooth" });
+  };
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (!en.isIntersecting) return;
       const id = en.target.id;
       tocLinks.forEach(a => a.classList.remove("active"));
       const link = toc.querySelector(`a[data-target="${id}"]`);
-      if (link) link.classList.add("active");
+      if (link) { link.classList.add("active"); keepVisible(link); }
       const chId = subToChapter[id];
       if (chId) { const cl = toc.querySelector(`a[data-target="${chId}"]`); if (cl) cl.classList.add("active"); }
     });

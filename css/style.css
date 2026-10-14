@@ -478,6 +478,12 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
   position: sticky;
   top: 28px;
   align-self: start;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
 }
 .ch-toc h4 {
   font-family: var(--font-mono);
@@ -935,6 +941,6 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
   .net-canvas { height: 60vh; }
   .net-side { border-left: none; border-top: 1px solid var(--line); }
   .ch-layout { grid-template-columns: 1fr; gap: 32px; }
-  .ch-toc { position: static; }
+  .ch-toc { position: static; max-height: none; overflow: visible; padding-right: 0; }
   .hero h1 { font-size: 2.2rem; }
 }
