@@ -41,7 +41,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -524,7 +524,7 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
 .toc-sub-link { font-size: 0.78rem; color: var(--text-3); line-height: 1.4; }
 .toc-sub-link.active { color: var(--accent); }
 
-.ch-content { max-width: 680px; }
+.ch-content { max-width: 42.5rem; }
 .chapter { margin-bottom: 80px; padding-bottom: 60px; border-bottom: 1px solid var(--line); }
 .chapter:last-child { border-bottom: none; }
 .chapter .ch-num {
@@ -943,4 +943,76 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
   .ch-layout { grid-template-columns: 1fr; gap: 32px; }
   .ch-toc { position: static; max-height: none; overflow: visible; padding-right: 0; }
   .hero h1 { font-size: 2.2rem; }
+}
+
+/* ─── 章節:窄螢幕可折疊目錄 ─────────────────────────────── */
+.toc-toggle { all: unset; }
+@media (max-width: 900px) {
+  .ch-toc h4 { margin-bottom: 0; }
+  .toc-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    box-sizing: border-box; width: 100%;
+    padding: 12px 14px; cursor: pointer;
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r);
+    color: var(--text-2);
+  }
+  .toc-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .toc-toggle::after { content: "▾"; font-size: 0.9rem; transition: transform 0.2s; }
+  .ch-toc.open .toc-toggle::after { transform: rotate(180deg); }
+  .ch-toc:not(.open) > ol { display: none; }
+  .ch-toc > ol { margin-top: 12px; }
+  .chapter, .ch-sub { scroll-margin-top: 72px; }
+}
+
+/* ─── 章節:右側欄「本節提到的詞條」(寬螢幕)─────────────── */
+.ch-rail { display: none; }
+.ch-rail h4 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.rail-sec { font-size: 0.85rem; color: var(--text-2); line-height: 1.45; margin-bottom: 14px; }
+.rail-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.rail-item {
+  display: block; width: 100%; box-sizing: border-box; text-align: left; cursor: pointer;
+  font: inherit; color: var(--text);
+  background: var(--bg-2);
+  border: 1px solid var(--line); border-left: 3px solid var(--line-2); border-radius: var(--r-sm);
+  padding: 8px 10px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.rail-item:hover { background: var(--bg-3); border-top-color: var(--accent); border-right-color: var(--accent); border-bottom-color: var(--accent); }
+.rail-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.rail-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-3); }
+.rail-name { display: block; font-size: 0.88rem; line-height: 1.35; margin-top: 2px; }
+.rail-empty { color: var(--text-3); font-size: 0.82rem; }
+
+@media (min-width: 1680px) {
+  .ch-layout {
+    grid-template-columns: 13.75rem minmax(0, 42.5rem) 18.75rem;
+    justify-content: center;
+    gap: 3.5rem;
+    max-width: none;
+  }
+  .ch-rail {
+    display: block;
+    position: sticky; top: 28px; align-self: start;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto; overscroll-behavior: contain;
+    padding-right: 6px;
+  }
+}
+
+/* ─── 寬螢幕:放寬版面、等比放大 ───────────────────────── */
+@media (min-width: 1920px) {
+  :root { --max-w: 1440px; }
+  html { font-size: 17px; }
+}
+@media (min-width: 2400px) {
+  :root { --max-w: 1760px; }
+  html { font-size: 18px; }
+  .ch-layout { grid-template-columns: 15rem minmax(0, 42.5rem) 21rem; gap: 4rem; }
 }

@@ -43,6 +43,27 @@
   }
   const para = (t, ids) => `<p>${autolink(t, ids)}</p>`;
 
+  // 右側欄用:列出一段文字裡提到的所有詞條(依出現順序,不受「每章只連一次」限制)
+  const termsByFirst = {};
+  linkTerms.forEach(lt => (termsByFirst[lt.term[0]] ||= []).push(lt));
+  function collectMentions(text, acc) {
+    let i = 0;
+    while (i < text.length) {
+      let hit = null;
+      for (const lt of termsByFirst[text[i]] || []) {
+        if (!text.startsWith(lt.term, i)) continue;
+        if (ASCII.test(lt.term[0])) {
+          const before = i > 0 ? text[i - 1] : "";
+          const after = text[i + lt.term.length] || "";
+          if (ASCII.test(before) || ASCII.test(after)) continue;
+        }
+        hit = lt; break;
+      }
+      if (hit) { acc.add(hit.id); i += hit.term.length; } else i++;
+    }
+    return acc;
+  }
+
   // ── TOC(兩層:章 → 小節)──
   const toc = document.getElementById("toc");
   toc.innerHTML = data.chapters.map(c => {
@@ -105,10 +126,23 @@
     window.__openEntity(el.dataset.id);
   });
 
+  // ── 窄螢幕:目錄可折疊 ──
+  const tocNav = toc.closest(".ch-toc");
+  const tocToggle = tocNav.querySelector(".toc-toggle");
+  const narrow = window.matchMedia("(max-width: 900px)");
+  const setTocOpen = open => {
+    tocNav.classList.toggle("open", open);
+    tocToggle.setAttribute("aria-expanded", String(open));
+  };
+  tocToggle.addEventListener("click", () => {
+    if (narrow.matches) setTocOpen(!tocNav.classList.contains("open"));
+  });
+
   // TOC 平滑捲動
   toc.querySelectorAll("a").forEach(a => {
     a.addEventListener("click", ev => {
       ev.preventDefault();
+      if (narrow.matches) setTocOpen(false);
       const el = document.getElementById(a.dataset.target);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -145,4 +179,57 @@
     });
   }, { rootMargin: "-25% 0px -65% 0px" });
   observeTargets.filter(Boolean).forEach(t => obs.observe(t));
+
+  // ── 右側欄:本節提到的詞條(寬螢幕才顯示)──
+  const rail = document.getElementById("ch-rail");
+  const entById = Object.fromEntries(data.entities.map(e => [e.id, e]));
+  const blocks = [];                          // 依文件順序:章導言 → 各小節
+  data.chapters.forEach(c => {
+    const intro = collectMentions(c.lead || "", new Set());
+    (c.paragraphs || []).forEach(t => collectMentions(t, intro));
+    blocks.push({ el: document.getElementById(c.id), title: c.title, ids: [...intro] });
+    (c.sections || []).forEach(sec => {
+      const ids = new Set();
+      sec.paragraphs.forEach(t => collectMentions(t, ids));
+      blocks.push({ el: document.getElementById(sec.id), title: sec.heading, ids: [...ids] });
+    });
+  });
+
+  let shown = null;
+  function renderRail(b) {
+    if (b === shown) return;
+    shown = b;
+    const items = b.ids.map(id => entById[id]).filter(Boolean).map(e => {
+      const color = (periodMap[e.periodId] || {}).color || "var(--line-2)";
+      return `<li><button type="button" class="rail-item" data-id="${e.id}" style="border-left-color: ${color}">
+        <span class="rail-meta"><span>${typeLabel[e.type]}</span><span>${e.year}</span></span>
+        <span class="rail-name">${escapeHtml(e.name)}</span>
+      </button></li>`;
+    }).join("");
+    rail.innerHTML = `
+      <h4>本節提到的詞條</h4>
+      <div class="rail-sec">${escapeHtml(b.title)}</div>
+      ${items ? `<ol class="rail-list">${items}</ol>` : `<p class="rail-empty">這一節沒有提到站內詞條。</p>`}`;
+    rail.scrollTop = 0;
+  }
+  rail.addEventListener("click", e => {
+    const el = e.target.closest(".rail-item");
+    if (el) window.__openEntity(el.dataset.id);
+  });
+
+  let ticking = false;
+  function updateRail() {
+    ticking = false;
+    if (getComputedStyle(rail).display === "none") return;
+    const line = window.innerHeight * 0.35;
+    let cur = blocks[0];
+    for (const b of blocks) {
+      if (b.el && b.el.getBoundingClientRect().top <= line) cur = b; else break;
+    }
+    if (cur) renderRail(cur);
+  }
+  const queueRail = () => { if (!ticking) { ticking = true; requestAnimationFrame(updateRail); } };
+  window.addEventListener("scroll", queueRail, { passive: true });
+  window.addEventListener("resize", queueRail);
+  updateRail();
 })();
