@@ -16,7 +16,7 @@
   // 時期軸
   const axis = document.createElement("div");
   axis.className = "timeline-axis";
-  axis.innerHTML = periods.map(p => `
+  axis.innerHTML = `<div class="tl-axis-spacer"></div>` + periods.map(p => `
     <div class="tl-period" style="flex:1; border-top-color: ${p.color}">
       <div class="tl-period-label">${p.name}</div>
       <div class="tl-period-sub">${p.subtitle}</div>

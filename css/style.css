@@ -215,7 +215,10 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
   border-top: 1px solid var(--line);
   position: relative;
 }
+.tl-axis-spacer { width: 100px; flex-shrink: 0; }
 .tl-period {
+  flex: 1 1 0;
+  min-width: 0;
   position: relative;
   padding: 16px 18px 12px;
   border-right: 1px solid var(--line);
@@ -245,7 +248,8 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
 }
 .tl-row-track { display: flex; flex: 1; position: relative; }
 .tl-cell {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   border-right: 1px solid var(--line);
   padding: 12px 10px;
   display: flex;
@@ -267,6 +271,8 @@ a:hover { color: var(--accent-2); border-bottom-color: var(--accent); }
   cursor: pointer;
   transition: all 0.15s;
   border-left-width: 3px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .tl-chip:hover { background: var(--bg-3); border-color: var(--line-2); }
 .tl-chip .year { font-family: var(--font-mono); color: var(--text-3); font-size: 0.7rem; }
